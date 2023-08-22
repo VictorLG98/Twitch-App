@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <!-- ... (otros elementos del head) -->
+        <style>
+            /* Estilos comunes */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #6441a5;
+                color: white;
+                padding: 20px;
+            }
+    
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+    
+            .card {
+                background-color: #2C2F33;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s;
+                margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                max-width: 600px; /* Limita el ancho de la tarjeta */
+                margin: 0 auto 20px;
+            }
+    
+            .card:hover {
+                transform: translateY(-5px);
+            }
+    
+            .card-content {
+                margin-top: 15px;
+            }
+    
+            .card-title {
+                margin: 0;
+                font-size: 1.5rem;
+                color: #FF69B4;
+            }
+    
+            .card-subtitle {
+                margin: 5px 0;
+                font-size: 1.2rem;
+                color: #F5A623;
+            }
+    
+            .card-info {
+                margin-top: 10px;
+            }
+    
+            .card-info p {
+                margin: 5px 0;
+                color: #99AAB5;
+            }
+    
+            .btn {
+                padding: 10px 20px;
+                margin-top: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #9147FF;
+                color: white;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+    
+            .btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 10px #9147FF;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: center;">Clips</h1>
+        <ul>
+            {% for clip in clips %}
+            <li class="card">
+                <a href="{{ clip.url }}" target="_blank">
+                    <img src="{{ clip.thumbnail_url }}" alt="{{ clip.title }}" style="border-radius: 5px; width: 100%;">
+                </a>
+                <div class="card-content">
+                    <h2 class="card-title">{{ clip.title }}</h2>
+                    <h3 class="card-subtitle">{{ clip.creator_name }}</h3>
+                    <div class="card-info">
+                        <p><strong>Views:</strong> {{ clip.view_count }}</p>
+                        <p><strong>Duration:</strong> {{ clip.duration }} seconds</p>
+                    </div>
+                    <button class="btn" onclick="window.open('{{ clip.url }}', '_blank')">Watch Clip</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    
+        <div class="button-container">
+            <button class="btn" onclick="window.location.href='/'">Regresar a la página principal</button>
+        </div>
+        
+    </body>
+</html>

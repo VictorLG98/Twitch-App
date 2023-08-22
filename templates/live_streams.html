@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <!-- ... (otros elementos del head) -->
+        <style>
+            /* Estilos comunes */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #6441a5;
+                color: white;
+                padding: 20px;
+            }
+    
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+    
+            .card {
+                background-color: #2C2F33;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s;
+                margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                max-width: 700px; /* Limita el ancho de la tarjeta para streams */
+                margin: 0 auto 20px; /* Centra las tarjetas horizontalmente */
+            }
+    
+            .card:hover {
+                transform: translateY(-5px);
+            }
+    
+            .card-content {
+                margin-top: 15px;
+            }
+    
+            .card-title {
+                margin: 0;
+                font-size: 1.5rem;
+                color: #FF69B4;
+            }
+    
+            .card-subtitle {
+                margin: 5px 0;
+                font-size: 1.2rem;
+                color: #F5A623;
+            }
+    
+            .card-info {
+                margin-top: 10px;
+            }
+    
+            .card-info p {
+                margin: 5px 0;
+                color: #99AAB5;
+            }
+    
+            .btn {
+                padding: 10px 20px;
+                margin-top: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #9147FF;
+                color: white;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+    
+            .btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 0 10px #9147FF;
+            }
+    
+            .twitch-embed {
+                overflow: hidden;
+                position: relative;
+                padding-bottom: 56.25%; /* Proporción 16:9 */
+                height: 0;
+                max-width: 100%;
+            }
+    
+            .twitch-embed iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h1 style="text-align: center;">Live Streams</h1>
+    
+        <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    
+        <ul>
+            {% for stream in streams %}
+            <li class="card">
+                <div id="player{{ stream.user_id }}" class="twitch-embed"></div>
+                <div class="card-content">
+                    <h2 class="card-title">{{ stream.user_name }}</h2>
+                    <h3 class="card-subtitle">{{ stream.game_name }}</h3>
+                    <div class="card-info">
+                        <p><strong>Type:</strong> {{ stream.type }}</p>
+                        <p><strong>Title:</strong> {{ stream.title }}</p>
+                        <p><strong>Viewer Count:</strong> {{ stream.viewer_count }}</p>
+                        <p><strong>Started At:</strong> {{ stream.started_at }}</p>
+                        <p><strong>Language:</strong> {{ stream.language }}</p>
+                        <p><strong>Tags:</strong> {{ stream.tags|join(', ') }}</p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    
+        <div class="button-container">
+            <button class="btn" onclick="window.location.href='/'">Regresar a la página principal</button>
+        </div>
+        
+    
+        <script type="text/javascript">
+            {% for stream in streams %}
+            var options{{ stream.user_id }} = {
+                width: "100%",
+                height: "100%",
+                channel: "{{ stream.user_name }}",
+                parent: ["localhost"],
+                muted: true,
+            };
+            var player{{ stream.user_id }} = new Twitch.Player("player{{ stream.user_id }}", options{{ stream.user_id }});
+            player{{ stream.user_id }}.setVolume(0.5);
+            {% endfor %}
+        </script>
+    </body>
+</html>
