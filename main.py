@@ -7,9 +7,9 @@ from starlette.requests import Request
 from fastapi.responses import HTMLResponse
 
 # Configuración de la API de Twitch
-CLIENT_ID = "ijaeafck79lqn9tv0u3zrwuu8qbnyx"
-CLIENT_SECRET = "6tlw8ne0hdbluyonhnknvu5ir3zarq"
-OAUTH_TOKEN = "zsj3ginup6nkxh4v70syrezagw8suh"  # Necesario para algunas consultas
+CLIENT_ID = "YOUR_CLIENT"
+CLIENT_SECRET = "YOUR_SECRET"
+OAUTH_TOKEN = "YOUR_TOKEN"  # Necesario para algunas consultas
 
 async def get_live_streams():
     twitch = await Twitch(CLIENT_ID, CLIENT_SECRET)
